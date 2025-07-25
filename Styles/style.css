@@ -18,6 +18,8 @@ body{
   align-items: center;
   height: 100vh;
   background: linear-gradient(217deg, var(--bg-primary), var(--bg-secondary));
+  background-repeat: repeat;
+  background-size: contain;
   color: var(--color-text);
   font-family: "Inter", sans-serif;
 }
