@@ -1,9 +1,23 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
-:root{
-  --bg-primary: #3300ff;
-  --bg-secondary: #140042;
+
+/*
+  === Night ===
+  --bg-blur: rgba(21, 21, 21, 0.35);
   --color-text: #fafafa;
+  --main-border: #343434;
+
+  === Day ===
+  --bg-blur: rgba(169, 169, 169, 0.35);
+  --color-text: #454545;
+  --main-border: #b5b5b5;
+*/
+
+:root{
+  --bg-blur: rgba(21, 21, 21, 0.35);
+  --color-text: #fafafa;
+  --main-border: #343434;
+  --bg-image: url("../assets/night.png");
 }
 
 *{
@@ -17,11 +31,13 @@ body{
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: linear-gradient(217deg, var(--bg-primary), var(--bg-secondary));
-  background-repeat: repeat;
-  background-size: contain;
+  background-image: var(--bg-image);
+  /*  background: linear-gradient(217deg, var(--bg-primary), var(--bg-secondary));*/
+  background-repeat: no-repeat;
+  background-size: cover;
   color: var(--color-text);
   font-family: "Inter", sans-serif;
+  transition: .5s;
 }
 
 .main__container{
@@ -29,12 +45,34 @@ body{
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  background: rgba(21, 21, 21, 0.35);
+  background: var(--bg-blur);
   backdrop-filter: blur( 13.5px );
   height: 30em;
   width: 60rem;
   border-radius: .6rem;
-  border: solid 2px #343434;
+  border: solid 2px var(--main-border);
+}
+
+.container__header{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container__header i{
+  position: absolute;
+  font-size: 2rem;
+  right: 2rem;
+  cursor: pointer;
+  transition: .5s;
+}
+
+.fa-sun:hover{
+  color: #ffb86a;
+}
+
+.fa-moon:hover{
+  color: #fff085;
 }
 
 .container__title{
@@ -67,4 +105,8 @@ body{
 .main__container a{
   color: #4955ff;
   font-weight: 600;
+}
+
+.hidden{
+  display: none !important;
 }
