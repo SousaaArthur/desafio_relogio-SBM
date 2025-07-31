@@ -2,6 +2,12 @@ const buttonSun = document.getElementById("buttonSun");
 const buttonMoon = document.getElementById("buttonMoon");
 const root = document.documentElement;
 
+const textSeconds = document.getElementById("seconds");
+const textMinutes = document.getElementById("minutes");
+const textHours = document.getElementById("hour");
+
+const btnPlay = document.getElementById("play");
+
 /*
   === Night ===
   --bg-blur: rgba(21, 21, 21, 0.35);
@@ -39,3 +45,41 @@ buttonSun.addEventListener('click', () => {
     root.style.setProperty("--bg-image", "url('../assets/night.png')");
   }
 });
+
+let seconds = 0;
+let minutes = 0;
+let hours = 0;
+
+// function segundos(){
+//   if(seconds >= 60){
+//     alert("Tempo acabou");
+//     return
+//   }
+//   seconds++;
+//   textSeconds.innerText = seconds;
+//   console.log(seconds);
+// }
+
+let playActive = false;
+
+btnPlay.addEventListener('click', () => {
+  if(!playActive){
+  playActive = true;
+  setInterval(() => {
+    seconds += 1;
+    textSeconds.innerText = seconds;
+      if(seconds >= 59){
+        seconds = 0;
+        minutes++;
+        textMinutes.innerText = minutes;
+        if(minutes >= 59){
+          minutes = 0;
+          hours++;
+          textHours.innerText = hours;
+        }
+      }
+    }, 1000);
+  } else {
+    alert("O botão já está ativo")
+  }
+})
