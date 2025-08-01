@@ -6,7 +6,17 @@ const textSeconds = document.getElementById("seconds");
 const textMinutes = document.getElementById("minutes");
 const textHours = document.getElementById("hour");
 
+let seconds = 0;
+let minutes = 0;
+let hours = 0;
+
+textSeconds.innerText = seconds.toString().padStart(2, '0');
+textMinutes.innerText = minutes.toString().padStart(2, '0');
+textHours.innerText = hours.toString().padStart(2, '0');
+
 const btnPlay = document.getElementById("play");
+const btnPause = document.getElementById("pause");
+const btnRestart = document.getElementById("restart");
 
 /*
   === Night ===
@@ -46,10 +56,6 @@ buttonSun.addEventListener('click', () => {
   }
 });
 
-let seconds = 0;
-let minutes = 0;
-let hours = 0;
-
 // function segundos(){
 //   if(seconds >= 60){
 //     alert("Tempo acabou");
@@ -62,24 +68,65 @@ let hours = 0;
 
 let playActive = false;
 
+btnRestart.addEventListener('click', () => {
+  seconds = 0;
+  minutes = 0;
+  hours = 0;
+
+  textSeconds.innerText = "00";
+  textMinutes.innerText = "00";
+  textHours.innerText = "00";
+});
+
 btnPlay.addEventListener('click', () => {
   if(!playActive){
-  playActive = true;
-  setInterval(() => {
-    seconds += 1;
-    textSeconds.innerText = seconds;
-      if(seconds >= 59){
-        seconds = 0;
-        minutes++;
-        textMinutes.innerText = minutes;
-        if(minutes >= 59){
-          minutes = 0;
-          hours++;
-          textHours.innerText = hours;
-        }
-      }
-    }, 1000);
-  } else {
-    alert("O botão já está ativo")
+    startClock(true);
+    console.log(`O relógio está: ${playActive}`);
   }
 })
+
+btnPause.addEventListener('click', () => {
+  if(playActive){
+    startClock(false);
+    console.log(`O relógio está: ${playActive}`);
+  } else {
+    alert("O já relógio está pausado")
+  }
+});
+
+let idSetInterval;
+
+function count(){
+  seconds++;
+  textSeconds.innerText = seconds.toString().padStart(2, '0');
+
+  if(seconds >= 60){
+    seconds = '00';
+    textSeconds.innerText = seconds;
+
+    minutes++;
+    textMinutes.innerText = minutes.toString().padStart(2, '0');
+  }
+  if(minutes >= 60){
+    minutes = '00';
+    textMinutes.innerText = minutes;
+    
+    hours++;
+    textHours.innerText = hours.toString().padStart(2, '0');
+  }
+  if(hours >= 24){
+    hours = '00';
+    textHours.innerText = hours;
+  }
+}
+
+function startClock(active){
+  if(active){
+    playActive = true;
+    idSetInterval = setInterval(count, 1000);
+    console.log(idSetInterval);
+  } else {
+    playActive = false;
+    clearInterval(idSetInterval);
+  }
+}
