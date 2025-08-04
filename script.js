@@ -1,34 +1,28 @@
+// Botões de troca de tema
 const buttonSun = document.getElementById("buttonSun");
 const buttonMoon = document.getElementById("buttonMoon");
-const root = document.documentElement;
 
-const textSeconds = document.getElementById("seconds");
-const textMinutes = document.getElementById("minutes");
-const textHours = document.getElementById("hour");
-
-let seconds = 0;
-let minutes = 0;
-let hours = 0;
-
-textSeconds.innerText = seconds.toString().padStart(2, '0');
-textMinutes.innerText = minutes.toString().padStart(2, '0');
-textHours.innerText = hours.toString().padStart(2, '0');
-
+// Botões interativos do relógio
 const btnPlay = document.getElementById("play");
 const btnPause = document.getElementById("pause");
 const btnRestart = document.getElementById("restart");
 
-/*
-  === Night ===
-  --bg-blur: rgba(21, 21, 21, 0.35);
-  --color-text: #fafafa;
-  --main-border: #343434;
+const root = document.documentElement;
 
-  === Day ===
-  --bg-blur: rgba(169, 169, 169, 0.35);
-  --color-text: #454545;
-  --main-border: #b5b5b5;
-*/
+// Textos de tempo do relógio
+const textSeconds = document.getElementById("seconds");
+const textMinutes = document.getElementById("minutes");
+const textHours = document.getElementById("hour");
+
+// Variáveis de tempo inicial
+let hours = 23, minutes = 58, seconds = 55,  milliseconds = 1000;
+updateTime();
+
+// Armazena o id do setInterval
+let idSetInterval;
+
+// Inicia o botão play como false
+let playActive = false;
 
 buttonMoon.addEventListener('click', () => {
   if(!buttonMoon.classList.contains("hidden")){
@@ -56,28 +50,6 @@ buttonSun.addEventListener('click', () => {
   }
 });
 
-// function segundos(){
-//   if(seconds >= 60){
-//     alert("Tempo acabou");
-//     return
-//   }
-//   seconds++;
-//   textSeconds.innerText = seconds;
-//   console.log(seconds);
-// }
-
-let playActive = false;
-
-btnRestart.addEventListener('click', () => {
-  seconds = 0;
-  minutes = 0;
-  hours = 0;
-
-  textSeconds.innerText = "00";
-  textMinutes.innerText = "00";
-  textHours.innerText = "00";
-});
-
 btnPlay.addEventListener('click', () => {
   if(!playActive){
     startClock(true);
@@ -89,44 +61,52 @@ btnPause.addEventListener('click', () => {
   if(playActive){
     startClock(false);
     console.log(`O relógio está: ${playActive}`);
-  } else {
-    alert("O já relógio está pausado")
   }
 });
 
-let idSetInterval;
+btnRestart.addEventListener('click', () => {
+  resetClock();
+  console.log(`O relógio foi resetado!`);
+});
 
 function count(){
   seconds++;
-  textSeconds.innerText = seconds.toString().padStart(2, '0');
 
   if(seconds >= 60){
-    seconds = '00';
-    textSeconds.innerText = seconds;
-
+    seconds = 0;
     minutes++;
-    textMinutes.innerText = minutes.toString().padStart(2, '0');
   }
+  
   if(minutes >= 60){
-    minutes = '00';
-    textMinutes.innerText = minutes;
-    
+    minutes = 0;
     hours++;
-    textHours.innerText = hours.toString().padStart(2, '0');
-  }
+  } 
+  
   if(hours >= 24){
-    hours = '00';
-    textHours.innerText = hours;
+    resetClock();
+  } else {
+    updateTime();
   }
 }
 
 function startClock(active){
   if(active){
     playActive = true;
-    idSetInterval = setInterval(count, 1000);
-    console.log(idSetInterval);
+    idSetInterval = setInterval(count, milliseconds);
+    console.log("SetInterval ID:", idSetInterval);
   } else {
     playActive = false;
     clearInterval(idSetInterval);
   }
+}
+
+function resetClock(){
+  hours = 0, minutes = 0, seconds = 0;
+  updateTime();
+}
+
+function updateTime(){
+  textSeconds.innerText = seconds.toString().padStart(2, '0');
+  textMinutes.innerText = minutes.toString().padStart(2, '0');
+  textHours.innerText = hours.toString().padStart(2, '0');
 }
