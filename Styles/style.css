@@ -24,6 +24,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  user-select: none;
 }
 
 body{
@@ -48,7 +49,7 @@ body{
   background: var(--bg-blur);
   backdrop-filter: blur( 13.5px );
   height: 30em;
-  width: 60rem;
+  width: 60%;
   border-radius: .6rem;
   border: solid 2px var(--main-border);
 }
@@ -69,10 +70,12 @@ body{
 
 .fa-sun:hover{
   color: #ffb86a;
+  transform: scale(1.1);
 }
 
 .fa-moon:hover{
   color: #fff085;
+  transform: scale(1.1);
 }
 
 .container__title{
@@ -100,13 +103,71 @@ body{
   border-radius: .2rem;
   border: 2px solid #ffffff3f;
   cursor: pointer;
+  transition: .5s;
 }
+
+.buttons__container button:hover{
+  background-color: #fafafa2d;
+  border: 2px solid #ffffff56;
+  transform: scale(1.1);
+}
+
 
 .main__container a{
   color: #4955ff;
   font-weight: 600;
 }
 
+.buttons__container .inative{
+  color: var(--color-text);
+  background-color: #00000011;
+  backdrop-filter: blur( 13.5px );
+  border-radius: .2rem;
+  border: 2px solid #ffffff13;
+  cursor: auto;
+}
+
+.buttons__container .inative:hover{
+  background-color: #00000011;
+  border: 2px solid #ffffff13;
+  transform: scale(1);
+}
+
 .hidden{
   display: none !important;
+}
+
+@media (max-width: 1228px){
+  .container__time{
+    font-size: 6rem;
+  }
+}
+
+@media (max-width: 900px){
+    .container__time{
+    font-size: 4rem;
+  }
+}
+
+@media (max-width: 700px){
+  .container__title{
+    font-size: 2.5rem;
+  }
+  .container__time{
+    font-size: 3rem;
+  }
+  .container__header i{
+    top: 1rem;
+    right: .5rem;
+  }
+}
+
+@media (max-width: 550px){
+  .main__container{
+    width: 100vh;
+  }
+  .container__time{
+    font-size: 3rem;
+    gap: 1rem;
+  }
 }
